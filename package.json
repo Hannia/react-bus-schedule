@@ -1,0 +1,11 @@
+{
+  "name": "react-schedule-buses",
+  "version": "1.0.0",
+  "description": "Aplication to register bus Schedule.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Annia Gomez B",
+  "license": "ISC"
+}
