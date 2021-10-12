@@ -7,6 +7,11 @@ const FormElement = (props) => {
         props.onSaved (data);
     }
 
+    //Quiero cambiar InputForm por otro componente en el cual pueda imprimir el selector
+    /**
+     * Y el otro componente envio la informacion y ver como agrego el option
+     */
+
     return (
         <form onSubmit={ props.action }>
             { props.items.map ( (item, index) => 
