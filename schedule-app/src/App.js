@@ -1,6 +1,6 @@
 import './App.css';
 
-import AddRouteBus from './components/AddRouteBus/AddRouteBus';
+import FormAddRouter from './components/FormElement/FormAddRoute';
 
 
 
@@ -11,7 +11,7 @@ function App() {
       <header>
       </header>
       <div>
-        <AddRouteBus />
+        < FormAddRouter />
       </div>
     </div>
   );

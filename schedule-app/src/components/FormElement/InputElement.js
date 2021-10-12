@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const InputElement = props => {
+const InputElement = (props) => {
 
     const [enteredData, setData] = useState('');
 
@@ -12,26 +12,29 @@ const InputElement = props => {
         });
     }
 
-    const inputHtml = props.items.type === "number" ? 
-    <input 
-    className={`${props.classes}`} 
-    type={ props.items.type }   
-    min = { props.items.min }
-    max = { props.items.max }
-    name = { props.items.name_label }
-    onChange = { inputChangeHandler }
-    value = { enteredData }
-    />
-    : 
-    <input 
-    className={`${props.classes}`} 
-    type={ props.items.type } 
-    name={props.items.name_label } 
-    onChange = { inputChangeHandler }
-    value = { enteredData }
-    />;
+    let testHtml = <input />
 
-    return ( inputHtml );
+    if (props.type === 'number') {
+        return testHtml = <input 
+                className={`${props.classes}`} 
+                type={ props.type }   
+                min = { props.items.min }
+                max = { props.items.max }
+                name = { props.items.name_label }
+                onChange = { inputChangeHandler }
+                value = { enteredData }
+            />
+        }
+    if(props.type === "text") {
+        return testHtml = <input 
+            className={`${props.classes}`} 
+            type={ props.type } 
+            name={props.items.name_label } 
+            onChange = { inputChangeHandler }
+            value = { enteredData } />
+        }
+
+    return ( testHtml );
 
 }
 

@@ -1,6 +1,5 @@
-import { useState } from 'react';
-
-import InputElement from './InputElement'
+import InputElement from './InputElement';
+import LabelElement from './LabelElement';
 
 const InputForm = (props) => {
 
@@ -8,16 +7,16 @@ const InputForm = (props) => {
         props.onSaveForm(target);
     }
 
-//Puede ser que aqui con una opcion de condicion puedo agregar a opcion de seleccion am y pm 
-
     return (
         <div className="block_input">
-            <label 
-                htmlFor={ props.items.name_label } >
-                    { props.items.label }
-            </label>
+            <LabelElement 
+                htmlFor={ props.items.name_label } 
+                label_name =  { props.items.label }
+                />
             <InputElement 
-                items={ props.items } 
+                items = { props.items } 
+                name ={ props.items.name_label } 
+                type = { props.type }
                 classes = { props.classes } 
                 onSave= { onSaveHandle } 
                 />
