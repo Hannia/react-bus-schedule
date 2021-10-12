@@ -8,6 +8,8 @@ const InputForm = (props) => {
         props.onSaveForm(target);
     }
 
+//Puede ser que aqui con una opcion de condicion puedo agregar a opcion de seleccion am y pm 
+
     return (
         <div className="block_input">
             <label 
