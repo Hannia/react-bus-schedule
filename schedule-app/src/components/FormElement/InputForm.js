@@ -18,6 +18,7 @@ const InputForm = (props) => {
                 name ={ props.items.name_label } 
                 type = { props.type }
                 classes = { props.classes } 
+                placeholder = { props.items.label }
                 onSave= { onSaveHandle } 
                 />
         </div>

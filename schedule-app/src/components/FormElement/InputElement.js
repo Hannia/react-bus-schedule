@@ -6,35 +6,44 @@ const InputElement = (props) => {
 
     const inputChangeHandler = event => {
         setData(event.target.value);
-        props.onSave ( {
+        props.OnSaveInput ( {
             target: event.target.name,
             value: event.target.value
         });
     }
 
-    let testHtml = <input />
+    let inputHtml = <input className={props.classes} 
+                           type={ props.type } 
+                           name={ props.name }  
+                           onChange = { inputChangeHandler } 
+                           value = { enteredData }  />
 
     if (props.type === 'number') {
-        return testHtml = <input 
+        return inputHtml = <input 
                 className={`${props.classes}`} 
-                type={ props.type }   
-                min = { props.items.min }
-                max = { props.items.max }
-                name = { props.items.name_label }
+                type={ props.type } 
+                name={ props.name }  
+                min = { props.min }
+                max = { props.max }
                 onChange = { inputChangeHandler }
                 value = { enteredData }
+                placeholder={props.placeholder}
+                required= {props.required}
             />
         }
     if(props.type === "text") {
-        return testHtml = <input 
+        return inputHtml = <input 
             className={`${props.classes}`} 
             type={ props.type } 
-            name={props.items.name_label } 
+            name={ props.name }  
             onChange = { inputChangeHandler }
-            value = { enteredData } />
+            placeholder = {props.placeholder}
+            value = { enteredData } 
+            required= {props.required}
+            />
         }
 
-    return ( testHtml );
+    return ( inputHtml );
 
 }
 

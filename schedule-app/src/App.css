@@ -37,6 +37,19 @@
   }
 }
 
-.input-number {
-  width: 30px;
+input {
+  font: inherit;
+  padding: 0.5rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  max-width: 100%;
+}
+
+.place-class input {
+  width: 20rem;
+}
+
+.arrive_time input,
+.departure_time input{
+  width: 10rem;
 }
