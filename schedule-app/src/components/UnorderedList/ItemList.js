@@ -1,8 +1,9 @@
 
+import SpanElement from "../FormElement/SpanElement";
 
-const ItemList = () => {
+const ItemList = props => {
     
-    return <li>1</li>
+    return <li class="item"><SpanElement label = {props.label} /></li>
 }
 
 export default ItemList;

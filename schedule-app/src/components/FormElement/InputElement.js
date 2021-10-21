@@ -3,9 +3,11 @@ import { useState } from "react";
 const InputElement = (props) => {
 
     const [enteredData, setData] = useState('');
+   // const [isValid, setIsValid] = useState(true);
 
     const inputChangeHandler = event => {
         setData(event.target.value);
+        //if (event.target.value.trim().length > 0) setIsValid(true);
         props.OnSaveInput ( {
             target: event.target.name,
             value: event.target.value
@@ -28,7 +30,7 @@ const InputElement = (props) => {
                 onChange = { inputChangeHandler }
                 value = { enteredData }
                 placeholder={props.placeholder}
-                required= {props.required}
+
             />
         }
     if(props.type === "text") {
@@ -39,7 +41,6 @@ const InputElement = (props) => {
             onChange = { inputChangeHandler }
             placeholder = {props.placeholder}
             value = { enteredData } 
-            required= {props.required}
             />
         }
 

@@ -16,7 +16,7 @@ const SelectElement = props => {
                                                                 key={`${item}${index}`} 
                                                                 value={item} 
                                                                 option={item} 
-                                                                required= {props.required}/>)} 
+                                                                />)} 
                                                                 </select>);}
 
 export default SelectElement;
