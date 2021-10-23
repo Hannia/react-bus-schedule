@@ -53,3 +53,11 @@ input {
 .departure_time input{
   width: 10rem;
 }
+
+input.disable {
+  background-color: #fff;
+}
+
+input.active {
+  background-color: rgb(235, 156, 156);
+}

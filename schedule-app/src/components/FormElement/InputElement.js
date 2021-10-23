@@ -3,15 +3,16 @@ import { useState } from "react";
 const InputElement = (props) => {
 
     const [enteredData, setData] = useState('');
-   // const [isValid, setIsValid] = useState(true);
 
     const inputChangeHandler = event => {
         setData(event.target.value);
-        //if (event.target.value.trim().length > 0) setIsValid(true);
         props.OnSaveInput ( {
             target: event.target.name,
             value: event.target.value
         });
+
+        props.validButton();
+
     }
 
     let inputHtml = <input className={props.classes} 
@@ -33,6 +34,7 @@ const InputElement = (props) => {
 
             />
         }
+
     if(props.type === "text") {
         return inputHtml = <input 
             className={`${props.classes}`} 
