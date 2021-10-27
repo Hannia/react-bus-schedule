@@ -1,6 +1,6 @@
 import OptionElement from "./OptionElement"
 
-const SelectElement = props => {
+const SelectElement = (props) => {
 
     const dropDownTime = event => {
         props.OnSaveSelect({ 
@@ -12,11 +12,11 @@ const SelectElement = props => {
     return ( <select name={props.name} 
                      value={ props.selected } 
                      onChange={ dropDownTime }>
-                    {props.options.map( (item,index) => <OptionElement 
+                    {props.options.map( (item,index) => {return  <OptionElement 
                                                                 key={`${item}${index}`} 
                                                                 value={item} 
                                                                 option={item} 
-                                                                />)} 
+                                                                /> }) } 
                                                                 </select>);}
 
 export default SelectElement;

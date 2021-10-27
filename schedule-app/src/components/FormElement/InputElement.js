@@ -5,7 +5,7 @@ const InputElement = (props) => {
     const [enteredData, setData] = useState('');
 
     const inputChangeHandler = event => {
-        setData(event.target.value);
+        //setData(event.target.value);
         props.OnSaveInput ( {
             target: event.target.name,
             value: event.target.value
@@ -19,7 +19,8 @@ const InputElement = (props) => {
                            type={ props.type } 
                            name={ props.name }  
                            onChange = { inputChangeHandler } 
-                           value = { enteredData }  />
+                           placeholder = { props.placeholder }
+                           value = { props.value }  />
 
     if (props.type === 'number') {
         return inputHtml = <input 
@@ -29,7 +30,7 @@ const InputElement = (props) => {
                 min = { props.min }
                 max = { props.max }
                 onChange = { inputChangeHandler }
-                value = { enteredData }
+                value = { props.value }
                 placeholder={props.placeholder}
 
             />
@@ -42,7 +43,7 @@ const InputElement = (props) => {
             name={ props.name }  
             onChange = { inputChangeHandler }
             placeholder = {props.placeholder}
-            value = { enteredData } 
+            value = { props.value } 
             />
         }
 

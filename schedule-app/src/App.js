@@ -1,6 +1,9 @@
 import './App.css';
 
 import FormAddRouter from './components/FormElement/FormAddRoute';
+import SelectTransport from './components/SelectTransport/SelectTransport';
+import Prueba from './components/SelectTransport/prueba';
+
 
 
 
@@ -8,10 +11,9 @@ import FormAddRouter from './components/FormElement/FormAddRoute';
 function App() {
   return (
     <div className="App">
-      <header>
-      </header>
       <div>
-        < FormAddRouter />
+          <SelectTransport />
+          <FormAddRouter />
       </div>
     </div>
   );
