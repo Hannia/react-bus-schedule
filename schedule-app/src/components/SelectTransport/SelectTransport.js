@@ -1,5 +1,7 @@
-import InputElement from "../FormElement/InputElement";
-import ButtomElement from "../FormElement/ButtomElement";
+import { Fragment } from "react";
+
+import Input from "../BasicElement/Input";
+import Button from "../BasicElement/Button";
 
 const SelectTransport = () => {
 
@@ -7,20 +9,16 @@ const SelectTransport = () => {
         console.log(data);
     }
 
-    return (<div>
-        <InputElement 
+    return (<Fragment>
+        <Input 
             type = "search" 
             name="search_route"
             OnSaveInput= {OnSaveInput}
             placeholder = "Buscar"
             value= { '' }
             />
-        <ButtomElement 
-            type="button" 
-            label= "Buscar"
-            classNameButton="btn-search" 
-            disabled= {null}/>
-    </div>)
+        <Button classNameButton="btn-search">Buscar</Button>
+    </Fragment>)
 }
 
 export default SelectTransport;

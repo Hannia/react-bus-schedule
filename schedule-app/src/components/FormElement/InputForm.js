@@ -1,4 +1,4 @@
-import InputElement from './InputElement';
+import Input from '../BasicElement/Input';
 import LabelElement from './LabelElement';
 
 const InputForm = (props) => {
@@ -13,7 +13,7 @@ const InputForm = (props) => {
                 htmlFor={ props.items.name_label } 
                 label_name =  { props.items.label }
                 />
-            <InputElement 
+            <Input 
                 items = { props.items } 
                 name ={ props.items.name_label } 
                 type = { props.type }

@@ -1,197 +1,184 @@
 import { useState } from "react";
 
 /**Components */
-import InputElement from "./InputElement";
-import ButtomElement from "./ButtomElement";
+import Input from "../BasicElement/Input";
+import Button from "../BasicElement/Button";
 import SpanElement from './SpanElement';
 import SelectElement from "../SelectElement/SelectElement";
+import Unordered from '../BasicElement/Unordered';
 
 const FormAddRouter = () => {
 
     const dataRoutes = {
         departure: '',
         arrive: '',
-        departure_hour: ' ',
-        departure_minute: ' ',
-        departure_time: 'am',
-        arrive_hour: ' ',
-        arrive_minute: ' ',
-        arrive_time: 'am',
-        price_ticket: ' ' 
+        schedule: [],
+        price_ticket: '' 
     }
 
     /**State variables */
     const [dataArray, setDataArray] = useState(dataRoutes);
-    const [isDisabled, setIsDisabled] = useState("disabled");
+    const [departure_hour, setDeparture_hour] = useState('');
+    const [departure_minute, setDeparture_minute] = useState('');
+    const [arrive_hour, setArrive_hour] = useState('');
+    const [arrive_minute, setArrive_minute] = useState('');
+    const [departure_time, setDeparture_time] = useState('am');
+    const [arrive_time, setArrive_time] = useState('am');
 
     const options = ['am','pm'];
  
     const addRouteHandle = event => {
         event.preventDefault();
         console.log(dataArray);
+        if (dataArray.departure.trim().length === 0)
+            return;
+        if (dataArray.arrive.trim().length === 0)
+            return;
         setDataArray((prevState) => {
             return {...prevState, departure: ''}; 
         });
         setDataArray((prevState) => {
             return {...prevState, arrive: ''} 
         });
-        setDataArray((prevState) => {
-            return {...prevState, departure_hour: ' '} 
-        });
-        setDataArray( (prevState) => {
-            return {...prevState, departure_minute: ' '}
-        });
         setDataArray((prevState) => { 
-            return {...prevState, arrive_hour: ' ' }
-        });
-        setDataArray((prevState) => {
-            return {...prevState, arrive_minute: ' ' } 
-        });
-        setDataArray((prevState) => {
-            return { ...prevState, departure_time:'am'}
-        });
-        setDataArray((prevState) => {
-            return { ...prevState, arrive_time: 'am'}
-        });
-        setDataArray((prevState) => { 
-                return { ...prevState, price_ticket: ' '}
+                return { ...prevState, price_ticket: ''}
         });
     }
 
     const saveFormHandle = (data) => {
-        if (data.target === 'departure') {           
+        if (data.target === 'departure')           
             setDataArray((prevState) => {
                 return {...prevState, departure: data.value}; 
             });
-        }
-        if (data.target === 'arrive') {
+        
+        if (data.target === 'arrive')
             setDataArray((prevState) => {
                 return {...prevState, arrive: data.value} });
-        }
-        if (data.target === 'departure_hour') {
-           setDataArray((prevState) => {
-               return {...prevState, departure_hour: data.value} });
-        }
-        if (data.target === 'departure_minute') {
-            setDataArray( (prevState) => {
-                return {...prevState, departure_minute: data.value}} );
-        }
-        if (data.target === 'arrive_hour') {
-            setDataArray((prevState) => { 
-                return {...prevState, arrive_hour: data.value}} );
-        }
-        if (data.target === 'arrive_minute') {
-            setDataArray((prevState) => {
-                return {...prevState, arrive_minute: data.value} });
-        }
-        if (data.target === 'departure_time'){
-            setDataArray((prevState) => {
-                return { ...prevState, departure_time:data.value}} );
-        }
-        if (data.target === 'arrive_time') {
-            setDataArray((prevState) => {
-                return { ...prevState, arrive_time:data.value}} );
-        }
-        if (data.target === 'price_ticket') {
+        
+        if (data.target === 'departure_hour')
+            setDeparture_hour(data.value);
+        
+        if (data.target === 'departure_minute')
+            setDeparture_minute(data.value);
+
+        if (data.target === 'arrive_hour') 
+            setArrive_hour(data.value);
+
+        if (data.target === 'arrive_minute')
+            setArrive_minute(data.value);
+        
+        if (data.target === 'departure_time')
+            setDeparture_time(data.value);
+        
+        if (data.target === 'arrive_time') 
+            setArrive_time(data.value);
+
+        if (data.target === 'price_ticket')
             setDataArray((prevState) => { 
                 return { ...prevState, price_ticket:data.value}});
-        }
     }
 
-    const validDisabled = _ => {
-       if ( ( dataArray.departure.trim().length -1) > 0 && 
-            ( dataArray.arrive.trim().length -1) > 0  &&
-            ( dataArray.departure_hour !== '') && 
-            ( dataArray.departure_minute !== '') &&
-            ( dataArray.arrive_hour !== '') && 
-            ( dataArray.arrive_minute !== ''))
-                setIsDisabled(null);
-       else { setIsDisabled('disabled'); } 
-   }
+    const addSchedule = event => {
+        dataArray.schedule.push({
+            departure_hour: departure_hour,
+            departure_minute: departure_minute,
+            departure_time: departure_time,
+            arrive_hour: arrive_hour,
+            arrive_minute: arrive_minute,
+            arrive_time: arrive_time
+        });
+        setDataArray((prevState) => { return { ...prevState, schedule: dataArray.schedule}});
+        setDeparture_hour('');
+        setDeparture_minute('');
+        setDeparture_time('am');
+        setArrive_hour('');
+        setArrive_minute('');
+        setArrive_time('am');
+    }
 
 return <form onSubmit={addRouteHandle}>
             <div className="place-class">
                 <SpanElement label="Ingresar Ruta" />
                 <div className="input-routes">
-                    <InputElement 
-                        classes={`input-class ${dataArray.departure === '' || dataArray.departure.trim().length -1 > 0  ? 'disable'  : 'active'}`}
+                    <Input 
+                        classes={`input-class`}
                         type="text" 
                         name="departure" 
                         placeholder="Lugar de Salida" 
                         OnSaveInput = {saveFormHandle} 
-                        validButton= {validDisabled}
                         value = { dataArray.departure }
                         />
-                    <InputElement 
-                        classes={`input-class ${dataArray.arrive === '' || dataArray.arrive.trim().length -1 > 0 ? 'disable' : 'active'}`}
+                    <Input
+                        classes={`input-class`}
                         type="text" name="arrive" 
                         placeholder="Lugar de Llegada" 
                         OnSaveInput = {saveFormHandle} 
-                        validButton= {validDisabled}
                         value= { dataArray.arrive }
                         />
                 </div>
             </div>
             <div className="departure">
+                <p>Agregar los Horarios llagada y salida</p>
                 <SpanElement label="Ingresar hora de salida" />
                 <div className="departure_time">
-                    <InputElement 
-                        classes= {`input-number ${dataArray.departure_hour === '0' || dataArray.departure_hour !== '' ? 'disable' : 'active'  }`}
+                    <Input 
+                        classes= {`input-number`}
                         type="number" 
                         name="departure_hour" 
                         placeholder="Hora" min="1" max="12" 
                         OnSaveInput = {saveFormHandle} 
-                        validButton= {validDisabled} 
-                        value= { dataArray.departure_hour }
+                        value= { departure_hour }
                         />
-                    <InputElement 
-                        classes={`input-number ${dataArray.departure_minute === '0' || dataArray.departure_minute !== '' ? 'disable' : 'active'  }`}
+                    <Input  
+                        classes={`input-number`}
                         type="number" 
                         name="departure_minute" 
                         placeholder="Minutos" min="00" max="59" 
                         OnSaveInput = {saveFormHandle} 
-                        validButton= {validDisabled}
-                        value= { dataArray.departure_minute }
+                        value= { departure_minute }
                         /> 
-                    <SelectElement name="departure_time" selected={dataArray.departure_time} options={['am','pm']} OnSaveSelect = {saveFormHandle} />                   
+                    <SelectElement name="departure_time" selected={departure_time} options={['am','pm']} OnSaveSelect = {saveFormHandle} />                   
                 </div>
             </div>
             <div className="arrive">
                 <SpanElement label="Ingresar hora aproximada de llegada" />
                 <div className="arrive_time">
-                    <InputElement 
-                        classes={`input-number ${dataArray.arrive_hour === '0' || dataArray.arrive_hour !== '' ? 'disable' : 'active' }`} 
+                    <Input 
+                        classes={`input-number`} 
                         type="number" name="arrive_hour" 
                         placeholder="Hora" min="1" max="12" 
                         OnSaveInput = {saveFormHandle} 
-                        validButton= {validDisabled}
-                        value = { dataArray.arrive_hour }
+                        value = { arrive_hour }
                         />
-                    <InputElement 
-                        classes={`input-number ${dataArray.arrive_minute === '0' || dataArray.arrive_minute !== '' ? 'disable' : 'active'}`} 
+                    <Input 
+                        classes={`input-number`} 
                         type="number" 
                         name="arrive_minute" 
                         placeholder="Minutos" min="00" max="59" 
                         OnSaveInput = {saveFormHandle} 
-                        validButton= {validDisabled}
-                        value = { dataArray.arrive_minute }
+                        value = { arrive_minute }
                         />   
-                    <SelectElement name="arrive_time" selected={dataArray.arrive_time} options={options} OnSaveSelect = {saveFormHandle}/>    
+                    <SelectElement name="arrive_time" selected={arrive_time} options={options} OnSaveSelect = {saveFormHandle}/>    
                 </div>
             </div>
+                <Button classNameButton= {`button` } onClick={addSchedule}>Agregar horario</Button>
+                <Unordered>
+                    { dataArray.schedule.map( (item, index) => <li key={`schedule-${index}`}>{ 
+                        `Hora Salida ${item.departure_hour} : ${item.departure_minute} ${item.departure_time} 
+                         - Hora de llegada ${item.arrive_hour} : ${item.arrive_minute} ${item.arrive_time}` }</li>)  }
+                </Unordered>
             <div className="price">
-                <InputElement 
-                    classes= {`input-number ${ dataArray.price_ticket === '0' || dataArray.price_ticket !== '' ?  'disable' : 'active' }`}
+                <Input 
+                    classes= {`input-number`}
                     type= "number"
                     name="price_ticket"
                     placeholder = "Precio del tiquete"
                     OnSaveInput = {saveFormHandle}
-                    validButton = {validDisabled}
                     value= { dataArray.price_ticket }
                 />
             </div>
         <div className="buttom_submit">
-             <ButtomElement type="submit" classNameButton= {`button` } label= "Agregar nueva ruta" disabled={isDisabled} />
+             <Button type="submit" classNameButton= {`button` } >Agregar nueva ruta</Button>
         </div>
     </form>
 
