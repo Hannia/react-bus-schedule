@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, Fragment } from "react";
 
 /**Components */
 import Input from "../BasicElement/Input";
 import Button from "../BasicElement/Button";
+import Cart from "../Cart/Cart";
+import ErrorModal from "../ModalError/ErrorModal";
 import SpanElement from './SpanElement';
 import SelectElement from "../SelectElement/SelectElement";
 import Unordered from '../BasicElement/Unordered';
@@ -24,16 +26,20 @@ const FormAddRouter = () => {
     const [arrive_minute, setArrive_minute] = useState('');
     const [departure_time, setDeparture_time] = useState('am');
     const [arrive_time, setArrive_time] = useState('am');
+    const [error, setError] = useState();
 
     const options = ['am','pm'];
  
     const addRouteHandle = event => {
         event.preventDefault();
         console.log(dataArray);
-        if (dataArray.departure.trim().length === 0)
+        if (dataArray.departure.trim().length === 0 || dataArray.arrive.trim().length === 0) {
+            setError ( {
+                title:'Información invalida',
+                message: "Debe ingresar la ruta"
+            })
             return;
-        if (dataArray.arrive.trim().length === 0)
-            return;
+        }
         setDataArray((prevState) => {
             return {...prevState, departure: ''}; 
         });
@@ -78,7 +84,29 @@ const FormAddRouter = () => {
                 return { ...prevState, price_ticket:data.value}});
     }
 
-    const addSchedule = event => {
+    const addSchedule = _ => {
+        if (departure_hour > 12 || departure_hour < 0 || arrive_hour < 0  || arrive_hour > 12) {
+            return setError({
+                title: 'Información invalida',
+                message: 'Por favor, ingrese valores menores a 12 pero mayores a 0'
+            });    
+        }
+        if (departure_minute > 60 || departure_minute < 0 || arrive_minute < 0  || arrive_minute > 60) {
+            return setError({
+                title: 'Información invalida',
+                message: 'Por favor, ingrese valores menores a 60 pero mayores a 0'
+            }); 
+        }
+        if (departure_hour.trim().length === 0 || 
+            departure_minute.trim().length === 0 ||
+            arrive_hour.trim().length === 0 ||
+            arrive_minute.trim().length === 0){
+            return setError({
+                title: 'Información invalida',
+                message: 'Debe ingresar los datos correctamente Hora/minutos'
+            }); 
+        }
+
         dataArray.schedule.push({
             departure_hour: departure_hour,
             departure_minute: departure_minute,
@@ -96,7 +124,13 @@ const FormAddRouter = () => {
         setArrive_time('am');
     }
 
-return <form onSubmit={addRouteHandle}>
+    const errorHandle = () => {
+        setError(null);
+    }
+
+return <Fragment><Cart> 
+        { error && <ErrorModal title={ error.title } message={ error.message } onConfirm= { errorHandle } /> }
+        <form onSubmit={addRouteHandle}>
             <div className="place-class">
                 <SpanElement label="Ingresar Ruta" />
                 <div className="input-routes">
@@ -181,7 +215,7 @@ return <form onSubmit={addRouteHandle}>
              <Button type="submit" classNameButton= {`button` } >Agregar nueva ruta</Button>
         </div>
     </form>
-
+</Cart> </Fragment>
 }
 
 
