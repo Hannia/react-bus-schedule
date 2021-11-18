@@ -3,11 +3,11 @@ const Input = props => {
     const inputChangeHandler = event => {
         props.OnSaveInput ( {
             target: event.target.name,
-            value: event.target.value
+            value: event.target.value 
         });
     }
-
-    let input = <input className={props.classes} 
+ 
+    let input = <input className={props.classes}  
                        type={ props.type } 
                        name={ props.name }  
                        onChange = { inputChangeHandler } 
