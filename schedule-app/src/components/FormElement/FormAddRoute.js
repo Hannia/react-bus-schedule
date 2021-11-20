@@ -5,11 +5,11 @@ import Input from "../BasicElement/Input";
 import Button from "../BasicElement/Button";
 import Cart from "../Cart/Cart";
 import ErrorModal from "../ModalError/ErrorModal";
-import SpanElement from './SpanElement';
 import SelectElement from "../SelectElement/SelectElement";
 import Unordered from '../BasicElement/Unordered';
+import Span from '../BasicElement/Span';
 
-const FormAddRouter = () => {
+const FormAddRouter = (props) => {
 
     const dataRoutes = {
         departure: '',
@@ -32,14 +32,24 @@ const FormAddRouter = () => {
  
     const addRouteHandle = event => {
         event.preventDefault();
-        console.log(dataArray);
-        if (dataArray.departure.trim().length === 0 || dataArray.arrive.trim().length === 0) {
-            setError ( {
+        //console.log(dataArray);
+        if (dataArray.departure.trim().length === 0 || dataArray.arrive.trim().length === 0)
+            return setError ( {
                 title:'Información invalida',
-                message: "Debe ingresar la ruta"
-            })
-            return;
-        }
+                message: "Por favor, debe ingresar los datos de la ruta"
+            });
+        if (dataArray.schedule.length === 0)
+            return setError({
+                title: 'Información de horarios',
+                message: 'Por favor, ingrese los horarios'
+            });
+        if (dataArray.price_ticket.trim().length === 0)
+            return setError ( {
+                title:'Información invalida',
+                message: "Por favor, ingrese precio del tiquete"
+            });
+        dataArray.id = Math.random().toString();
+        props.onSaveData(dataArray);
         setDataArray((prevState) => {
             return {...prevState, departure: ''}; 
         });
@@ -49,6 +59,7 @@ const FormAddRouter = () => {
         setDataArray((prevState) => { 
                 return { ...prevState, price_ticket: ''}
         });
+        
     }
 
     const saveFormHandle = (data) => {
@@ -132,7 +143,7 @@ return <Fragment><Cart>
         { error && <ErrorModal title={ error.title } message={ error.message } onConfirm= { errorHandle } /> }
         <form onSubmit={addRouteHandle}>
             <div className="place-class">
-                <SpanElement label="Ingresar Ruta" />
+                <Span>Ingresar Ruta</Span>
                 <div className="input-routes">
                     <Input 
                         classes={`input-class`}
@@ -153,7 +164,7 @@ return <Fragment><Cart>
             </div>
             <div className="departure">
                 <p>Agregar los Horarios llagada y salida</p>
-                <SpanElement label="Ingresar hora de salida" />
+                <Span>"Ingresar hora de salida"</Span>
                 <div className="departure_time">
                     <Input 
                         classes= {`input-number`}
@@ -175,7 +186,7 @@ return <Fragment><Cart>
                 </div>
             </div>
             <div className="arrive">
-                <SpanElement label="Ingresar hora aproximada de llegada" />
+                <Span>Ingresar hora aproximada de llegada</Span>
                 <div className="arrive_time">
                     <Input 
                         classes={`input-number`} 
@@ -199,7 +210,7 @@ return <Fragment><Cart>
                 <Unordered>
                     { dataArray.schedule.map( (item, index) => <li key={`schedule-${index}`}>{ 
                         `Hora Salida ${item.departure_hour} : ${item.departure_minute} ${item.departure_time} 
-                         - Hora de llegada ${item.arrive_hour} : ${item.arrive_minute} ${item.arrive_time}` }</li>)  }
+                        - Hora de llegada ${item.arrive_hour} : ${item.arrive_minute} ${item.arrive_time}` }</li>)  }
                 </Unordered>
             <div className="price">
                 <Input 
@@ -212,10 +223,10 @@ return <Fragment><Cart>
                 />
             </div>
         <div className="buttom_submit">
-             <Button type="submit" classNameButton= {`button` } >Agregar nueva ruta</Button>
+            <Button type="submit" classNameButton= {`button` } >Agregar nueva ruta</Button>
         </div>
     </form>
-</Cart> </Fragment>
+</Cart></Fragment>
 }
 
 
