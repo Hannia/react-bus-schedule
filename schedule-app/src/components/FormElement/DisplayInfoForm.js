@@ -1,11 +1,8 @@
 import { Fragment } from "react";
-import Span from "../BasicElement/Span";
-import Unordered from '../BasicElement/Unordered';
+import Span from "../UI/Span";
+import Unordered from '../UI/Unordered';
 
 const DisplayInfoForm = (props) => {
-
-//Desplegar Informacion del horario de una ruta
-props.items.map(item => item.schedule.map((item) => {console.log(item.departure_hour)}));
     return (
         <Fragment>
             <Unordered>

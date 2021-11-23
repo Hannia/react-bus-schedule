@@ -1,13 +1,13 @@
 import { useState, Fragment } from "react";
 
 /**Components */
-import Input from "../BasicElement/Input";
-import Button from "../BasicElement/Button";
+import Input from "../UI/Input";
+import Button from "../UI/Button";
 import Cart from "../Cart/Cart";
 import ErrorModal from "../ModalError/ErrorModal";
 import SelectElement from "../SelectElement/SelectElement";
-import Unordered from '../BasicElement/Unordered';
-import Span from '../BasicElement/Span';
+import Unordered from '../UI/Unordered';
+import Span from '../UI/Span';
 
 const FormAddRouter = (props) => {
 
@@ -48,6 +48,12 @@ const FormAddRouter = (props) => {
                 title:'Información invalida',
                 message: "Por favor, ingrese precio del tiquete"
             });
+        if(+dataArray.price_ticket < 0) {
+            return setError({
+                title:'Valor invalido',
+                message: 'Please ingrese un valor mayor a cero'
+            })
+        }
         dataArray.id = Math.random().toString();
         props.onSaveData(dataArray);
         setDataArray((prevState) => {

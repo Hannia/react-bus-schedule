@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 
-import Input from "../BasicElement/Input";
-import Button from "../BasicElement/Button";
+import Input from "../UI/Input";
+import Button from "../UI/Button";
 
 const SelectTransport = () => {
 

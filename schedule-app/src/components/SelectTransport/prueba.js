@@ -1,8 +1,15 @@
 const Prueba = (props) => {
 
 
+    console.log (props.onHandlePrueba);
 
-    return (<div> {props.children}</div>)
+    const changeData = () => {
+        props.onBackResponsive('hola');
+    }
+    
+
+
+    return (<div onClick={ changeData }>Prueba</div>);
 }
 
 export default Prueba;
