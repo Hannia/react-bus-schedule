@@ -1,4 +1,4 @@
-import { useState, Fragment } from 'react';
+import { useState, Fragment, useEffect } from 'react';
 
 import './App.css';
 import DisplayInfoForm from './components/FormElement/DisplayInfoForm';
@@ -51,8 +51,17 @@ const listRutasBuses = [
 
 function App() {
 
+
+
   const [routesList, setRoutesList] = useState(listRutasBuses);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(()=> {
+    const storeduserLoggedIn = localStorage.getItem('isLoggedIn');
+    if(storeduserLoggedIn === '1') {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   const newRouteData = (data) => {
     console.log('Info App', data);
@@ -76,10 +85,12 @@ function App() {
 
   const loginHandle = ( data ) => {
     console.log (data);
+    localStorage.setItem('isLoggedIn', '1');
     setIsLoggedIn(true);
   }
 
   const logoutHandle = () => {
+    localStorage.removeItem('isLoggedIn');
     setIsLoggedIn(false);
   }
 
