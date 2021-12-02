@@ -1,104 +1,240 @@
-import InputForm from "./InputForm";
-import ButtomElement from "./ButtomElement";
+import { useState, Fragment } from "react";
 
-const FormAddRouter = () => {
+/**Components */
+import Input from "../UI/Input";
+import Button from "../UI/Button";
+import Cart from "../Cart/Cart";
+import ErrorModal from "../ModalError/ErrorModal";
+import SelectElement from "../SelectElement/SelectElement";
+import Unordered from '../UI/Unordered';
+import Span from '../UI/Span';
+
+const FormAddRouter = (props) => {
 
     const dataRoutes = {
         departure: '',
         arrive: '',
-        departure_hour: 0,
-        departure_minute: 0,
-        arrive_hour: 0,
-        arrive_minute: 0
+        schedule: [],
+        price_ticket: '' 
     }
 
-    const addRouteHandle = (event) => {
+    /**State variables */
+    const [dataArray, setDataArray] = useState(dataRoutes);
+    const [departure_hour, setDeparture_hour] = useState('');
+    const [departure_minute, setDeparture_minute] = useState('');
+    const [arrive_hour, setArrive_hour] = useState('');
+    const [arrive_minute, setArrive_minute] = useState('');
+    const [departure_time, setDeparture_time] = useState('am');
+    const [arrive_time, setArrive_time] = useState('am');
+    const [error, setError] = useState();
+
+    const options = ['am','pm'];
+ 
+    const addRouteHandle = event => {
         event.preventDefault();
-        console.log("Estpy funcionando");
-        console.log (dataRoutes);
-    }
-
-    const departureAtrr = {
-        name_label: 'departure',
-        label: 'Lugar de Salida'
-    }
-
-    const arriveAtrr = {
-        name_label: 'arrive',
-        label: 'Lugar de Llegada'
-    }
-
-    const hourDepartureAttr = {
-        name_label: 'departure_hour',
-        label: 'Hora Salida',
-        min: 1,
-        max: 12
-    }
-
-    const minuteDepartureAttr = {
-        name_label: 'departure_minute',
-        label: 'Minutos Salida',
-        min: 0,
-        max: 59
-    }
-
-    const hourArriveAttr = {
-        name_label: 'arrive_hour',
-        label: 'Hora Llegada',
-        min: 1,
-        max: 12
-    }
-
-    const minuteArriveAttr = {
-        name_label: 'arrive_minute',
-        label: 'Minutos Llegada',
-        min: 0,
-        max: 59
-    }
-
-    const buttonAttr = {
-        type: "submit",
-        classes: "button",
-        label: "Agregar nueva ruta"
+        //console.log(dataArray);
+        if (dataArray.departure.trim().length === 0 || dataArray.arrive.trim().length === 0)
+            return setError ( {
+                title:'Información invalida',
+                message: "Por favor, debe ingresar los datos de la ruta"
+            });
+        if (dataArray.schedule.length === 0)
+            return setError({
+                title: 'Información de horarios',
+                message: 'Por favor, ingrese los horarios'
+            });
+        if (dataArray.price_ticket.trim().length === 0)
+            return setError ( {
+                title:'Información invalida',
+                message: "Por favor, ingrese precio del tiquete"
+            });
+        if(+dataArray.price_ticket < 0) {
+            return setError({
+                title:'Valor invalido',
+                message: 'Please ingrese un valor mayor a cero'
+            })
+        }
+        dataArray.id = Math.random().toString();
+        props.onSaveData(dataArray);
+        setDataArray((prevState) => {
+            return {...prevState, departure: ''}; 
+        });
+        setDataArray((prevState) => {
+            return {...prevState, arrive: ''} 
+        });
+        setDataArray((prevState) => { 
+                return { ...prevState, price_ticket: ''}
+        });
+        
     }
 
     const saveFormHandle = (data) => {
-        if (data.target === 'departure') {
-            dataRoutes.departure = data.value
-        }
-        if (data.target === 'arrive') {
-            dataRoutes.arrive = data.value
-        }
-        if (data.target === 'departure_hour') {
-            dataRoutes.departure_hour = data.value
-        }
-        if (data.target === 'departure_minute') {
-            dataRoutes.departure_minute= data.value
-        }
-        if (data.target === 'arrive_hour') {
-            dataRoutes.arrive_hour = data.value
-        }
-        if (data.target === 'arrive_minute') {
-            dataRoutes.arrive_minute = data.value
-        }
+        if (data.target === 'departure')           
+            setDataArray((prevState) => {
+                return {...prevState, departure: data.value}; 
+            });
+        
+        if (data.target === 'arrive')
+            setDataArray((prevState) => {
+                return {...prevState, arrive: data.value} });
+        
+        if (data.target === 'departure_hour')
+            setDeparture_hour(data.value);
+        
+        if (data.target === 'departure_minute')
+            setDeparture_minute(data.value);
+
+        if (data.target === 'arrive_hour') 
+            setArrive_hour(data.value);
+
+        if (data.target === 'arrive_minute')
+            setArrive_minute(data.value);
+        
+        if (data.target === 'departure_time')
+            setDeparture_time(data.value);
+        
+        if (data.target === 'arrive_time') 
+            setArrive_time(data.value);
+
+        if (data.target === 'price_ticket')
+            setDataArray((prevState) => { 
+                return { ...prevState, price_ticket:data.value}});
     }
 
-return <form onSubmit={ addRouteHandle }>
-        <InputForm items = { departureAtrr } classes="input-class" type="text" onSaveForm = {saveFormHandle}/>
-        <InputForm items = { arriveAtrr } classes="input-class" type="text" onSaveForm = {saveFormHandle}/>
-        <div className="departure_time">
-             <InputForm items = { hourDepartureAttr } classes="input-number" type="number" onSaveForm = {saveFormHandle}/>
-             <InputForm items = { minuteDepartureAttr } classes="input-number" type="number" onSaveForm = {saveFormHandle}/>       
-        </div>
-        <div className="arrive_time">
-             <InputForm items = { hourArriveAttr } classes="input-number" type="number" onSaveForm = {saveFormHandle}/>
-             <InputForm items = { minuteArriveAttr } classes="input-number" type="number" onSaveForm = {saveFormHandle}/>       
-        </div>
+    const addSchedule = _ => {
+        if (departure_hour > 12 || departure_hour < 0 || arrive_hour < 0  || arrive_hour > 12) {
+            return setError({
+                title: 'Información invalida',
+                message: 'Por favor, ingrese valores menores a 12 pero mayores a 0'
+            });    
+        }
+        if (departure_minute > 60 || departure_minute < 0 || arrive_minute < 0  || arrive_minute > 60) {
+            return setError({
+                title: 'Información invalida',
+                message: 'Por favor, ingrese valores menores a 60 pero mayores a 0'
+            }); 
+        }
+        if (departure_hour.trim().length === 0 || 
+            departure_minute.trim().length === 0 ||
+            arrive_hour.trim().length === 0 ||
+            arrive_minute.trim().length === 0){
+            return setError({
+                title: 'Información invalida',
+                message: 'Debe ingresar los datos correctamente Hora/minutos'
+            }); 
+        }
+
+        dataArray.schedule.push({
+            departure_hour: departure_hour,
+            departure_minute: departure_minute,
+            departure_time: departure_time,
+            arrive_hour: arrive_hour,
+            arrive_minute: arrive_minute,
+            arrive_time: arrive_time
+        });
+        setDataArray((prevState) => { return { ...prevState, schedule: dataArray.schedule}});
+        setDeparture_hour('');
+        setDeparture_minute('');
+        setDeparture_time('am');
+        setArrive_hour('');
+        setArrive_minute('');
+        setArrive_time('am');
+    }
+
+    const errorHandle = () => {
+        setError(null);
+    }
+
+return <Fragment><Cart> 
+        { error && <ErrorModal title={ error.title } message={ error.message } onConfirm= { errorHandle } /> }
+        <form onSubmit={addRouteHandle}>
+            <div className="place-class">
+                <Span>Ingresar Ruta</Span>
+                <div className="input-routes">
+                    <Input 
+                        classes={`input-class`}
+                        type="text" 
+                        name="departure" 
+                        placeholder="Lugar de Salida" 
+                        OnSaveInput = {saveFormHandle} 
+                        value = { dataArray.departure }
+                        />
+                    <Input
+                        classes={`input-class`}
+                        type="text" name="arrive" 
+                        placeholder="Lugar de Llegada" 
+                        OnSaveInput = {saveFormHandle} 
+                        value= { dataArray.arrive }
+                        />
+                </div>
+            </div>
+            <div className="departure">
+                <p>Agregar los Horarios llagada y salida</p>
+                <Span>"Ingresar hora de salida"</Span>
+                <div className="departure_time">
+                    <Input 
+                        classes= {`input-number`}
+                        type="number" 
+                        name="departure_hour" 
+                        placeholder="Hora" min="1" max="12" 
+                        OnSaveInput = {saveFormHandle} 
+                        value= { departure_hour }
+                        />
+                    <Input  
+                        classes={`input-number`}
+                        type="number" 
+                        name="departure_minute" 
+                        placeholder="Minutos" min="00" max="59" 
+                        OnSaveInput = {saveFormHandle} 
+                        value= { departure_minute }
+                        /> 
+                    <SelectElement name="departure_time" selected={departure_time} options={['am','pm']} OnSaveSelect = {saveFormHandle} />                   
+                </div>
+            </div>
+            <div className="arrive">
+                <Span>Ingresar hora aproximada de llegada</Span>
+                <div className="arrive_time">
+                    <Input 
+                        classes={`input-number`} 
+                        type="number" name="arrive_hour" 
+                        placeholder="Hora" min="1" max="12" 
+                        OnSaveInput = {saveFormHandle} 
+                        value = { arrive_hour }
+                        />
+                    <Input 
+                        classes={`input-number`} 
+                        type="number" 
+                        name="arrive_minute" 
+                        placeholder="Minutos" min="00" max="59" 
+                        OnSaveInput = {saveFormHandle} 
+                        value = { arrive_minute }
+                        />   
+                    <SelectElement name="arrive_time" selected={arrive_time} options={options} OnSaveSelect = {saveFormHandle}/>    
+                </div>
+            </div>
+                <Button classNameButton= {`button` } onClick={addSchedule}>Agregar horario</Button>
+                <Unordered>
+                    { dataArray.schedule.map( (item, index) => <li key={`schedule-${index}`}>{ 
+                        `Hora Salida ${item.departure_hour} : ${item.departure_minute} ${item.departure_time} 
+                        - Hora de llegada ${item.arrive_hour} : ${item.arrive_minute} ${item.arrive_time}` }</li>)  }
+                </Unordered>
+            <div className="price">
+                <Input 
+                    classes= {`input-number`}
+                    type= "number"
+                    name="price_ticket"
+                    placeholder = "Precio del tiquete"
+                    OnSaveInput = {saveFormHandle}
+                    value= { dataArray.price_ticket }
+                />
+            </div>
         <div className="buttom_submit">
-             <ButtomElement type={ buttonAttr.type } classNameButton= { buttonAttr.classes } label= { buttonAttr.label } />
+            <Button type="submit" classNameButton= {`button` } >Agregar nueva ruta</Button>
         </div>
     </form>
-
+</Cart></Fragment>
 }
+
+
 
 export default FormAddRouter;
