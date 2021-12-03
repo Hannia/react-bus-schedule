@@ -1,4 +1,4 @@
-import { useState, Fragment, useEffect } from 'react';
+import { useState, Fragment, useContext } from 'react';
 
 import './App.css';
 import DisplayInfoForm from './components/FormElement/DisplayInfoForm';
@@ -9,6 +9,7 @@ import Prueba from './components/SelectTransport/Prueba';
 import Home from './components/Home/Home';
 import Login from './components/Login/Login';
 import MainHeader from './components/MainHeader/MainHeader';
+import AuthContext from './store/auth-context';
 
 // Agregar schedule
 
@@ -51,17 +52,8 @@ const listRutasBuses = [
 
 function App() {
 
-
-
   const [routesList, setRoutesList] = useState(listRutasBuses);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(()=> {
-    const storeduserLoggedIn = localStorage.getItem('isLoggedIn');
-    if(storeduserLoggedIn === '1') {
-      setIsLoggedIn(true);
-    }
-  }, []);
+  const ctx = useContext(AuthContext);
 
   const newRouteData = (data) => {
     console.log('Info App', data);
@@ -79,34 +71,19 @@ function App() {
     console.log (data);
   }
 
-  const isLogin = data => {
-    console.log(data);
-  }
-
-  const loginHandle = ( data ) => {
-    console.log (data);
-    localStorage.setItem('isLoggedIn', '1');
-    setIsLoggedIn(true);
-  }
-
-  const logoutHandle = () => {
-    localStorage.removeItem('isLoggedIn');
-    setIsLoggedIn(false);
-  }
-
 
   return (
-    <div className="App">
       <Fragment>
-          <MainHeader isAuthenticated={isLoggedIn} onLogout= { logoutHandle }/>
-          {!isLoggedIn && <Login onLogin = { loginHandle } /> }
-          {isLoggedIn && <Home onLogin = { isLogin } /> }
+          <MainHeader />
+            <main>
+                {!ctx.isLoggedIn && <Login /> }
+                {ctx.isLoggedIn && <Home /> }
+            </main>
           <SelectTransport />
-          { !isLoggedIn && <DisplayInfoForm items= {routesList} />}
-          { isLoggedIn && <FormAddRouter onSaveData={ newRouteData } />}
+          { !ctx.isLoggedIn && <DisplayInfoForm items= {routesList} />}
+          { ctx.isLoggedIn && <FormAddRouter onSaveData={ newRouteData } />}
           <Prueba onHandlePrueba={datosPrueba} onBackResponsive={recivedData}/>
       </Fragment>
-    </div>
   );
 }
 

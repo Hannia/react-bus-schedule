@@ -1,12 +1,17 @@
+import React, { useContext } from "react";
+
 import Unordered from "../UI/Unordered";
 import Button from '../UI/Button';
+import AuthContext from "../../store/auth-context";
 
-const Navegation = props => {
+const Navegation = () => {
+
+    const ctx = useContext(AuthContext);
 
     return <nav>
         <Unordered>
-            { !props.isLogged && <li><a href='/'>Login</a></li> }
-            { props.isLogged && <li><Button onClick={props.onLogout}>Logout</Button></li> }
+            { !ctx.isLoggedIn && <li><a href='/'>Login</a></li> }
+            { ctx.isLoggedIn && <li><Button onClick={ctx.onLogout}>Logout</Button></li> }
         </Unordered>
     </nav>
 }

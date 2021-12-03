@@ -1,6 +1,7 @@
-import React, { useEffect, useState, useReducer } from "react";
+import React, { useEffect, useState, useReducer, useContext } from "react";
 import Button from '../UI/Button';
 import classes from './Login.module.css';
+import AuthContext from "../../store/auth-context";
 
 const emailUser = (state, action) => {
     if (action.type === 'USER_INPUT'){
@@ -33,6 +34,7 @@ const Login = props => {
         value: '',
         isValid: null
     });
+    const authCtx = useContext(AuthContext);
 
     const { isValid: emailIsValid } = emailState;
     const { isValid: passwordIsValid } = passwordState;
@@ -71,10 +73,9 @@ const Login = props => {
 
     const summitHandle = (event) => {
         event.preventDefault();
-        props.onLogin({
-            userEmail: emailState.value,
-            userPassword: passwordState.value
-        });
+        authCtx.onLogin(
+            emailState.value,
+            passwordState.value);
     }
 
 
