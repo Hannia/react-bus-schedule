@@ -1,0 +1,59 @@
+.center_schedule {
+    display: flex;
+    justify-content: center;
+} 
+
+.mar_top_bottom {
+    margin: 2rem 0;
+}
+
+.style_list ul {
+    list-style: none;
+}
+
+.center {
+    text-align: center;
+}
+
+.schedule_items{
+    margin-bottom: 2rem;
+}
+
+.schedule_items p {
+    text-align: center;
+    margin: 1rem 0;
+}
+
+.title_route {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.icon_right {
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 1px;
+    border: 0.225rem solid #4d4d4d;
+    border-bottom: 0;
+    border-left: 0;
+    display: inline-block;
+    transform: rotate(45deg);
+    margin-right: 0.313rem;
+}
+
+.item {
+    display: flex;
+    width: 400px;
+    margin-bottom: 1rem;
+    justify-content: space-between;
+    border-bottom: 1px solid #4d4d4d;
+}
+
+.active {
+    display: block;
+}
+
+.inactive {
+    display: none;
+}

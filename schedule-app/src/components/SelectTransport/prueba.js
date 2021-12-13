@@ -7,9 +7,11 @@ const Prueba = (props) => {
         props.onBackResponsive('hola');
     }
     
+    const attrPruebas = {
+        att1: ''
+    }
 
-
-    return (<div onClick={ changeData }>Prueba</div>);
+    return (<div onClick={ changeData } { ...props.value }>Prueba</div>);
 }
 
 export default Prueba;

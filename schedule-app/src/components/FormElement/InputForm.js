@@ -7,6 +7,7 @@ const InputForm = (props) => {
         props.onSaveForm(target);
     }
 
+
     return (
         <div className="block_input">
             <LabelElement 

@@ -1,4 +1,13 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+}
 
+.content {
+  width: 100%;
+  max-width: 1160px;
+  margin: auto;
+}
 
 input {
   font: inherit;

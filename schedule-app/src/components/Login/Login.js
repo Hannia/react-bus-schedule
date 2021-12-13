@@ -76,11 +76,12 @@ const Login = props => {
         authCtx.onLogin(
             emailState.value,
             passwordState.value);
+        authCtx.onDropdownLogin();
     }
 
 
     return (
-        <form onSubmit= { summitHandle }>
+        <form className={classes.form_login} onSubmit= { summitHandle }>
             <h2>Iniciar Sesión</h2>
             <div className={`${classes.control} ${
                     emailState.isValid === false ? classes.invalid : ''}`} >
@@ -100,7 +101,7 @@ const Login = props => {
                         placeholder='Ingrese su contraseña'
                     />
             </div>
-            <Button type="submit" disabled={!formIsValid}>Ingresar</Button>
+            <Button classBtn={classes.btnLogin} type="submit" disabled={!formIsValid}>Ingresar</Button>
         </form>
     );
 }

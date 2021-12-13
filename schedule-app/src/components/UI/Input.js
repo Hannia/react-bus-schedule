@@ -1,3 +1,5 @@
+import  classes  from './UI.module.css';
+
 const Input = props => {
 
     const inputChangeHandler = event => {
@@ -6,38 +8,12 @@ const Input = props => {
             value: event.target.value 
         });
     }
- 
-    let input = <input className={props.classes}  
-                       type={ props.type } 
-                       name={ props.name }  
-                       onChange = { inputChangeHandler } 
-                       placeholder = { props.placeholder }
-                       value = { props.value } />
 
-    if (props.type === 'number') {
-        return input = <input 
-                className={`${props.classes}`} 
-                type= { props.type } 
-                name= { props.name }  
-                min = { props.min }
-                max = { props.max }
-                onChange = { inputChangeHandler }
-                value = { props.value }
-                placeholder={props.placeholder} />
-    }
-
-    if(props.type === "text") {
-        return input = <input 
-            className={`${props.classes}`} 
-            type={ props.type } 
-            name={ props.name }  
-            onChange = { inputChangeHandler }
-            placeholder = {props.placeholder}
-            value = { props.value } />
-    }
-
-    return ( input );
-
+    return (<input className={`${classes} ${props.class}`} 
+                    name = { props.name }
+                    onChange= { inputChangeHandler } 
+                    value= {props.value} 
+                    {...props.attr}/>);
 }
 
 export default Input;

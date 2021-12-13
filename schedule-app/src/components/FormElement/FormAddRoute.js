@@ -1,5 +1,6 @@
 import { useState, Fragment } from "react";
 
+
 /**Components */
 import Input from "../UI/Input";
 import Button from "../UI/Button";
@@ -8,6 +9,7 @@ import ErrorModal from "../ModalError/ErrorModal";
 import SelectElement from "../SelectElement/SelectElement";
 import Unordered from '../UI/Unordered';
 import Span from '../UI/Span';
+import classes from './Form.module.css'
 
 const FormAddRouter = (props) => {
 
@@ -145,26 +147,54 @@ const FormAddRouter = (props) => {
         setError(null);
     }
 
+    const attrTextDeparture = {
+        type: 'text',
+        placeholder: 'Lugar de Salida'
+    } 
+
+    const attrTextArrive = {
+        type: 'text',
+        placeholder: "Lugar de Llegada" 
+    }
+
+    const attrNumberHour= {
+        type: 'number',
+        placeholder: 'Hora',
+        min: '1',
+        max: '12'
+    }
+
+    const attrNumberMin = {
+        type: "number",
+        placeholder: "Minuto",
+        min: "00",
+        max: "59"
+    }
+
+    const attrPrice = {
+        type: "number",
+        placeholder: 'Precio del tiquete'
+    }
+
 return <Fragment><Cart> 
         { error && <ErrorModal title={ error.title } message={ error.message } onConfirm= { errorHandle } /> }
-        <form onSubmit={addRouteHandle}>
+        <form className={classes.form} onSubmit={addRouteHandle}>
             <div className="place-class">
                 <Span>Ingresar Ruta</Span>
                 <div className="input-routes">
                     <Input 
                         classes={`input-class`}
-                        type="text" 
-                        name="departure" 
-                        placeholder="Lugar de Salida" 
-                        OnSaveInput = {saveFormHandle} 
+                        name='departure'
                         value = { dataArray.departure }
+                        OnSaveInput = {saveFormHandle}
+                        attr= { attrTextDeparture }
                         />
                     <Input
                         classes={`input-class`}
-                        type="text" name="arrive" 
-                        placeholder="Lugar de Llegada" 
-                        OnSaveInput = {saveFormHandle} 
+                        name= { "arrive" }
                         value= { dataArray.arrive }
+                        OnSaveInput = {saveFormHandle} 
+                        attr= { attrTextArrive }
                         />
                 </div>
             </div>
@@ -174,19 +204,17 @@ return <Fragment><Cart>
                 <div className="departure_time">
                     <Input 
                         classes= {`input-number`}
-                        type="number" 
-                        name="departure_hour" 
-                        placeholder="Hora" min="1" max="12" 
+                        name= "departure_hour"
                         OnSaveInput = {saveFormHandle} 
                         value= { departure_hour }
+                        attr= { attrNumberHour }
                         />
                     <Input  
                         classes={`input-number`}
-                        type="number" 
                         name="departure_minute" 
-                        placeholder="Minutos" min="00" max="59" 
                         OnSaveInput = {saveFormHandle} 
                         value= { departure_minute }
+                        attr= { attrNumberMin }
                         /> 
                     <SelectElement name="departure_time" selected={departure_time} options={['am','pm']} OnSaveSelect = {saveFormHandle} />                   
                 </div>
@@ -196,18 +224,17 @@ return <Fragment><Cart>
                 <div className="arrive_time">
                     <Input 
                         classes={`input-number`} 
-                        type="number" name="arrive_hour" 
-                        placeholder="Hora" min="1" max="12" 
-                        OnSaveInput = {saveFormHandle} 
+                        name="arrive_hour" 
                         value = { arrive_hour }
+                        OnSaveInput = {saveFormHandle} 
+                        attr= { attrNumberHour }
                         />
                     <Input 
                         classes={`input-number`} 
-                        type="number" 
-                        name="arrive_minute" 
-                        placeholder="Minutos" min="00" max="59" 
+                        name="arrive_minute"                  
                         OnSaveInput = {saveFormHandle} 
                         value = { arrive_minute }
+                        attr= { attrNumberMin }
                         />   
                     <SelectElement name="arrive_time" selected={arrive_time} options={options} OnSaveSelect = {saveFormHandle}/>    
                 </div>
@@ -221,11 +248,10 @@ return <Fragment><Cart>
             <div className="price">
                 <Input 
                     classes= {`input-number`}
-                    type= "number"
                     name="price_ticket"
-                    placeholder = "Precio del tiquete"
                     OnSaveInput = {saveFormHandle}
                     value= { dataArray.price_ticket }
+                    attr= { attrPrice }
                 />
             </div>
         <div className="buttom_submit">
